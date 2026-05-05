@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class App {
     public static void main(String[] args) {
@@ -29,21 +30,13 @@ public class App {
     	List<String> listadoDeArgumentos = Arrays.asList(args);
     	listadoDeArgumentos.forEach(System.out::println);
     
-    // Creación del Map a partir de listadoDeArgumentos:
-    
-    	Map<String, Integer> m = new HashMap<>();// se le pueden quitar las palabras String, Integer. 
-    
-    //Para agregar entradas al Map m, recorreremos la lista listadoDeArgumentos utilizando una sentencia for
-    
-    	Integer frecuenciaOcurrencia = null; //esta variable es para que en la primera coincidencia pueda 
-                                         //devolver null porque el nombre es nuevo
-    	for (String nombre : listadoDeArgumentos) {
-    	//Comprobar si Rodrigo (clave) ya está en el Map m, sino, que lo agregue
-    		frecuenciaOcurrencia = m.get(nombre);
-    	// Rodrigo no está la primera vez que lo consigue, entonces se agrega:
-//si frecuenciaOcurrencia = null la primera vez que lo encuentra, se agrega a m: 1 else (:) incrementa en 1
-    		m.put(nombre, frecuenciaOcurrencia == null ? 1 : frecuenciaOcurrencia + 1);
-    	}                                                 // ++frecuenciaOcurrencia  tambien funciona (Acum)
-        System.out.println("Mapa Resultante: " + m);
+    // Creación del Map a partir de listadoDeArgumentos con stream:
+    								//cada vez que se quiera obtener una colección, despues de stream se usa
+    	Map<String, Long> m = listadoDeArgumentos.stream() // .collect
+  // agrupar por nombre y cuento con la lambda(->) los nombres
+    			.collect(Collectors.groupingBy(nombre -> nombre,
+    					Collectors.counting()));
+    	System.out.println("Mapa Resultante: " + m);
+
     }
 }
