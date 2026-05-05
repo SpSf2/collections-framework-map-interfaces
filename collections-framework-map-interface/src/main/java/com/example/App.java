@@ -1,10 +1,49 @@
 package com.example;
 
-/**
- * Hello world!
- */
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class App {
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+       
+    /* Que es un Map Interfaces o un Map simplemente:  Es una colección, aunque no hereda de la interfaz
+     * Collection, pero se puede tratar como tal utilizando las Collections Views, que veremos luego.
+     * 
+     * Concretamente, un Map es una coloección que relaciona claves con valores, lo que antiguamente se
+     * llamaba "Hash" (clave(key) y valor (value)), donde las clves no pueden repetirse.
+     * 
+     * Los métodos de ordenamiento y de búsqueda que son aplicables a las interfaces que heredan de 
+     * Collection, no son aplicables a la interface Map.  Por ejm:  el método (.sort) no se le puede
+     * aplicar a un Map.
+     * En resumen, una Interface Map, mapea (relaciona) claves con valor en un contenedor, que se puede
+     * crear de varias formas y recorrer de varias formas también.      */
+   /**
+     	A modo de ejemplo, vamos a crear una colección (map Interface) que almacene frecuencia de repetición
+     	/ocurrencia de un array de palabras que se reciben como parámetro en el método main, cuando se 
+     	 * lanza la aplicación    */
+    /*  Primero comprobar si estamos recibiendo el array de nombres en la variable Arguments cuando se lanza
+     * la aplicación*/
+    
+    	List<String> listadoDeArgumentos = Arrays.asList(args);
+    	listadoDeArgumentos.forEach(System.out::println);
+    
+    // Creación del Map a partir de listadoDeArgumentos:
+    
+    	Map<String, Integer> m = new HashMap<>();// se le pueden quitar las palabras String, Integer. 
+    
+    //Para agregar entradas al Map m, recorreremos la lista listadoDeArgumentos utilizando una sentencia for
+    
+    	Integer frecuenciaOcurrencia = null; //esta variable es para que en la primera coincidencia pueda 
+                                         //devolver null porque el nombre es nuevo
+    	for (String nombre : listadoDeArgumentos) {
+    	//Comprobar si Rodrigo (clave) ya está en el Map m, sino, que lo agregue
+    		frecuenciaOcurrencia = m.get(nombre);
+    	// Rodrigo no está la primera vez que lo consigue, entonces se agrega:
+//si frecuenciaOcurrencia = null la primera vez que lo encuentra, se agrega a m: 1 else (:) incrementa en 1
+    		m.put(nombre, frecuenciaOcurrencia == null ? 1 : frecuenciaOcurrencia + 1);
+    	}                                                 // ++frecuenciaOcurrencia  tambien funciona (Acum)
+        System.out.println("Mapa Resultante: " + m);
     }
 }
