@@ -64,7 +64,7 @@ public class App {
     	
     	System.out.println(m2);
     	
-    	/** CREACIÓN DE UNA LISTA DE EMPLEADOS  */
+    	/** CREACIÓN DE UNA LISTA DE EMPLEADOS Y ESTUDIANTES */
     	List<Empleado> empleados = new ArrayList<Empleado>();
     	
     	// se crea el builder Empleados
@@ -179,6 +179,28 @@ public class App {
     			.fechaAlta(LocalDate.of(2015, Month.SEPTEMBER, 22))
     			.build();
     	
+    	Estudiante est1 = Estudiante.builder()
+    			.nombre("Carlos")
+    			.primerApellido("Glez")
+    			.segundoApellido("Sanchez")
+    			.genero(Genero.HOMBRE)
+    			.fechaNacimiento(LocalDate.of(1995, Month.MAY, 20))
+    			.totalAsignaturas(10)
+    			.facultad(Facultad.BIOLOGIA)
+    			.fechaAltaFacultad(LocalDate.of(2015, Month.SEPTEMBER, 22))
+    			.build();
+    	
+    	Estudiante est2 = Estudiante.builder()
+    			.nombre("José")
+    			.primerApellido("Suarez")
+    			.segundoApellido("Jimenez")
+    			.genero(Genero.HOMBRE)
+    			.fechaNacimiento(LocalDate.of(1996, Month.MARCH, 10))
+    			.totalAsignaturas(10)
+    			.facultad(Facultad.BIOLOGIA)
+    			.fechaAltaFacultad(LocalDate.of(2011, Month.JULY, 25))
+    			.build();
+    	
     	empleados = Arrays.asList(emp1, emp2, emp3, emp4, emp5, emp6, emp7, emp8, emp9, emp10);
     	
     	//  Crear una colección que agrupe empleados por genero: entonces creamos un Map que tenga como clave
@@ -190,9 +212,10 @@ public class App {
     	
     	//  Variante del Método: Cuando se recorre una lista que es del mismo tipo que los elementos del valor del Mapa,
     	// no hay que hacer nada para que el elemento que circula por la tubería termine en la lista correspondiente
-    	// al valor de la entrada del Map
+    	// al valor de la entrada del Map y el código se reduce.
+    	// Ahora metimos estudiantes en el listado
     	Map<Genero, List<Empleado>> empleadosPorGenero = empleados.stream() 
-				
+				.filter(obj -> obj instanceof Empleado)
     				.collect(Collectors.groupingBy(Persona::getGenero));
     						
     	System.out.println("Empleados por Género: " + empleadosPorGenero);
