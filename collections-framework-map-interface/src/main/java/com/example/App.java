@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class App {
@@ -32,11 +33,50 @@ public class App {
     
     // Creación del Map a partir de listadoDeArgumentos con stream:
     								//cada vez que se quiera obtener una colección, despues de stream se usa
-    	Map<String, Long> m = listadoDeArgumentos.stream() // .collect
+  /*  	Map<String, Long> m = listadoDeArgumentos.stream() // .collect
   // agrupar por nombre y cuento con la lambda(->) los nombres
     			.collect(Collectors.groupingBy(nombre -> nombre,
     					Collectors.counting()));
-    	System.out.println("Mapa Resultante: " + m);
-
+    	System.out.println("Mapa Resultante: " + m);  */
+    	
+    	/*  Proceso que tambien se usa mucho:  */
+    	
+    	Map<String, Long> m = null;
+       
+    	// Variante # 1 de creación de Map a partir de recorrer el listado de argumentos utilizando operaciones
+    	/*de agregado (Tubería, métodos de clase stream, lambda, metodos por referencia, etc)*/
+    	
+    	m = listadoDeArgumentos.stream() //function.identity lo que entra es lo que se mantiene
+    		.collect(Collectors.groupingBy(Function.identity(),
+    				Collectors.counting()));
+    	
+    	System.out.println(m);
+    	
+    	// Variante # 2  Recomendada!!!
+    	
+    	var m2 = listadoDeArgumentos.stream()
+    			.collect(Collectors.groupingBy(nombre -> nombre, 
+    					Collectors.counting()));
+    	
+    	System.out.println(m2);
+    	
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
