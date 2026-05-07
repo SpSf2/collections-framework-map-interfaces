@@ -63,10 +63,10 @@ public class App {
     					Collectors.counting()));
     	
     	System.out.println(m2);
-    	
+    	/* extends se puede utilizar cuando ya tienes la lista hecha, no acepta add */
     	/** CREACIÓN DE UNA LISTA DE EMPLEADOS Y ESTUDIANTES */
-    	List<Empleado> empleados = new ArrayList<Empleado>();
-    	
+    	List<? extends Persona> listadoGenerico = null; //no necesitas reservar memoria para esta lista
+    	                                                //le puedo agregar persona , empleado y estudiante
     	// se crea el builder Empleados
     	Empleado emp1 = Empleado.builder()
     			.nombre("Jorge Francisco")
@@ -201,7 +201,7 @@ public class App {
     			.fechaAltaFacultad(LocalDate.of(2011, Month.JULY, 25))
     			.build();
     	
-    	empleados = Arrays.asList(emp1, emp2, emp3, emp4, emp5, emp6, emp7, emp8, emp9, emp10);
+    	listadoGenerico = Arrays.asList(emp1, emp2, emp3, emp4, emp5, emp6, emp7, emp8, emp9, emp10, est1);
     	
     	//  Crear una colección que agrupe empleados por genero: entonces creamos un Map que tenga como clave
     	// Genero y como valor una lista de empleados por cada genero, el operador (>>) asigna!!!
@@ -214,11 +214,21 @@ public class App {
     	// no hay que hacer nada para que el elemento que circula por la tubería termine en la lista correspondiente
     	// al valor de la entrada del Map y el código se reduce.
     	// Ahora metimos estudiantes en el listado
-    	Map<Genero, List<Empleado>> empleadosPorGenero = empleados.stream() 
+    	
+    	/* Map<Genero, List<Empleado>> empleadosPorGenero = empleados.stream() 
 				.filter(obj -> obj instanceof Empleado)
     				.collect(Collectors.groupingBy(Persona::getGenero));
     						
-    	System.out.println("Empleados por Género: " + empleadosPorGenero);
+    	System.out.println("Empleados por Género: " + empleadosPorGenero); */
+    	
+    	Map<Genero, List<Empleado>> empleadosPorGenero = listadoGenerico.stream()
+    			.filter(obj -> obj instanceof Empleado)
+    			.map(obj -> (Empleado) obj)
+    			.collect(Collectors.groupingBy(Empleado::getGenero));
+
+
+
+    			System.out.println("Empleados por Genero: " + empleadosPorGenero);
     	
     	
     	
