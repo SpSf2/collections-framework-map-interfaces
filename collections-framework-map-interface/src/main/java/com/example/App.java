@@ -64,8 +64,9 @@ public class App {
     	
     	System.out.println(m2);
     	/* extends se puede utilizar cuando ya tienes la lista hecha, no acepta add */
+    	/* Luego cambiamos a super Persona para agregar add y quitamos null
     	/** CREACIÓN DE UNA LISTA DE EMPLEADOS Y ESTUDIANTES */
-    	List<? extends Persona> listadoGenerico = null; //no necesitas reservar memoria para esta lista
+    	List<? super Persona> listadoGenerico = new ArrayList<>(); // para usar el metodo add
     	                                                //le puedo agregar persona , empleado y estudiante
     	// se crea el builder Empleados
     	Empleado emp1 = Empleado.builder()
@@ -201,8 +202,20 @@ public class App {
     			.fechaAltaFacultad(LocalDate.of(2011, Month.JULY, 25))
     			.build();
     	
-    	listadoGenerico = Arrays.asList(emp1, emp2, emp3, emp4, emp5, emp6, emp7, emp8, emp9, emp10, est1);
+    //	listadoGenerico = Arrays.asList(emp1, emp2, emp3, emp4, emp5, emp6, emp7, emp8, emp9, emp10, est1);
     	
+    	listadoGenerico.add(emp1);
+    	listadoGenerico.add(emp2);
+    	listadoGenerico.add(emp3);
+    	listadoGenerico.add(emp4);
+    	listadoGenerico.add(emp5);
+    	listadoGenerico.add(emp6);
+    	listadoGenerico.add(emp7);
+    	listadoGenerico.add(emp8);
+    	listadoGenerico.add(emp9);
+    	listadoGenerico.add(emp10);
+    	listadoGenerico.add(est1);
+    	listadoGenerico.add(est2);
     	//  Crear una colección que agrupe empleados por genero: entonces creamos un Map que tenga como clave
     	// Genero y como valor una lista de empleados por cada genero, el operador (>>) asigna!!!
    /* 	Map<Genero, List<Empleado>> empleadosPorGenero = empleados.stream() // empleados.stream es la tuberia 
