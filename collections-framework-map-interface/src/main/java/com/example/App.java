@@ -252,11 +252,11 @@ public class App {
     	
     	// Obtener una coleccion que agrupe empleados por Dpto y Género
     	// Declaramos  el primer Map con Dpto como clave y como las claves no se pueden repetir entonces, declaramos un 2º Map que tendrá como clave Genero		
-    /*	Map<Dpto, Map<Genero, List<Empleado>>> empleadosPorDptoYGenero = listadoGenerico.stream()
+    	Map<Dpto, Map<Genero, List<Empleado>>> empleadosPorDptoYGenero = listadoGenerico.stream()
     			.filter(o -> o instanceof Empleado)
     			.map(o -> (Empleado)o)
     			.collect(Collectors.groupingBy(Empleado::getDpto,
-    						Collectors.groupingBy(Empleado::getGenero)));*/
+    						Collectors.groupingBy(Empleado::getGenero)));
     	
     	/* Obtener una colección que agrupe solo nombres de los empleados por genero sin que se dupliquen los nombres*/
     		// Clave Genero porque va a agrupar por genero y un set para que no admita duplicados
@@ -294,6 +294,55 @@ public class App {
     	// covertimos el salario obtenido a double para poder usar averagingDouble
     	System.out.println("Empleados por Genero: " + salarioPromedio);
     						 
+    	/*  Para recorrer un Map hay que utilizar una de las 3 vistas de colecciones (Collections Views)
+    	 * para especificar is queremos recorrer las claves del mapa, los valores del maps o todas las
+    	 * entradas del mapa, invluyendo claves y valores*/
+    	
+    	// 1º  Recorrer el Map m que esta arriba al principio con "For mejorado" y mostrar solamente los
+    	// valores que sean par:
+    	
+    	for(Map.Entry<String, Long> entry : m.entrySet()) {
+    		
+    		String k = entry.getKey();
+    		Long v = entry.getValue();
+    		
+    		if (v % 2 == 0) {
+    			System.out.println(v);
+    		};
+    		
+    	}
+    	// Lo mismo pero con operaciones de agregado:
+    	
+	    m.entrySet().forEach(entry -> {
+	    	
+	    	if (entry.getValue() % 2 == 0) {
+	    		System.out.println(entry.getValue());
+	    	}
+	    });
+	    // Recorrer el Mapa empleadosPorDptoYGenero y mostrar el orden natural por antiguedad, los más
+	    //antiguos primero: 1º con for mejorado y después operaciones de agregado
+	    
+	    for (Map.Entry<Dpto, Map<Genero, List<Empleado>>> entry1 : empleadosPorDptoYGenero.entrySet()) {
+	    	
+	    	Dpto k = entry1.getKey();
+	    	Map<Genero, List<Empleado>> v = entry1.getValue();
+	    	
+	    	for (Map.Entry<Genero, List<Empleado>> entry2 : v.entrySet()) {
+	    		System.out.println("Del Dpto: " + k + ", y del Genero: " + entry2.getKey());
+	    		System.out.println("Los empledos se muestran a continuación: ");
+	    		
+	    		
+	    	}
+	    	
+	    }
+	    
+    
+      
+    
+    
+    
+    
+    	
     	
     	
     	
