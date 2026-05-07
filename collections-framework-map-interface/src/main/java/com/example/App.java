@@ -3,14 +3,17 @@ package com.example;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
+import static java.util.stream.Collectors.*;
 public class App {
     public static void main(String[] args) {
        
@@ -126,7 +129,7 @@ public class App {
     			.build();
 
     	Empleado emp6 = Empleado.builder()
-    			.nombre("Francisca")
+    			.nombre("Mariana")
     			.primerApellido("Alvarez")
     			.segundoApellido("Glez")
     			.genero(Genero.MUJER)
@@ -137,7 +140,7 @@ public class App {
     			.build();
     			
     	Empleado emp7 = Empleado.builder()
-    			.nombre("Maricarmen")
+    			.nombre("Mariana")
     			.primerApellido("Becerra")
     			.segundoApellido("Mtnez")
     			.genero(Genero.MUJER)
@@ -234,14 +237,63 @@ public class App {
     						
     	System.out.println("Empleados por Género: " + empleadosPorGenero); */
     	
-    	Map<Genero, List<Empleado>> empleadosPorGenero = listadoGenerico.stream()
-    			.filter(obj -> obj instanceof Empleado)
-    			.map(obj -> (Empleado) obj)
-    			.collect(Collectors.groupingBy(Empleado::getGenero));
+    	//  Casteo com map para convertir al objeto en empleado!!!
+    	
+   /* 	Map<Genero, List<Empleado>> empleadosPorGenero = listadoGenerico.stream()
+    			.filter(objeto -> objeto instanceof Empleado)// si el objeto que va circulando por la tuberia es una instancia de Empleado, entonces pasa al map
+    			.map(objeto -> (Empleado) objeto) //y lo castea. El metodo map recibe el objeto y lo forza a ser un Empleado 
+    											 
+    			.collect(Collectors.groupingBy(Empleado::getGenero)); 
 
 
 
-    			System.out.println("Empleados por Genero: " + empleadosPorGenero);
+    			System.out.println("Empleados por Genero: " + empleadosPorGenero); */
+    	
+    	
+    	// Obtener una coleccion que agrupe empleados por Dpto y Género
+    	// Declaramos  el primer Map con Dpto como clave y como las claves no se pueden repetir entonces, declaramos un 2º Map que tendrá como clave Genero		
+    /*	Map<Dpto, Map<Genero, List<Empleado>>> empleadosPorDptoYGenero = listadoGenerico.stream()
+    			.filter(o -> o instanceof Empleado)
+    			.map(o -> (Empleado)o)
+    			.collect(Collectors.groupingBy(Empleado::getDpto,
+    						Collectors.groupingBy(Empleado::getGenero)));*/
+    	
+    	/* Obtener una colección que agrupe solo nombres de los empleados por genero sin que se dupliquen los nombres*/
+    		// Clave Genero porque va a agrupar por genero y un set para que no admita duplicados
+    	Map<Genero, Set<String>> nombresPorGenero = listadoGenerico.stream()
+    			.filter(o -> o instanceof Empleado)
+    			.map(o -> (Empleado)o)
+    			.collect(Collectors.groupingBy(Empleado::getGenero, 
+    					// un mapper es un collector que recibe la función que le pide al empleado el nombre
+    					Collectors.mapping(Empleado::getNombre,
+    							Collectors.toSet())));
+    			
+    	System.out.println("Empleados por Genero: " + nombresPorGenero);
+    	
+    	/* Obtener una colección que agrupe nombres de Empleados separados por comas y por Edad*/
+    	Map<Long, String> nombresPorEdad = listadoGenerico.stream()
+    			.filter(o -> o instanceof Empleado)
+				.map(o -> (Empleado)o)
+    			.collect(Collectors.groupingBy(emp -> 
+    				ChronoUnit.YEARS.between(emp.getFechaNacimiento(),
+    						LocalDate.now()),
+    				Collectors.mapping(Empleado::getNombre,
+    						Collectors.joining(","))));
+    	
+    	System.out.println("Empleados por Genero: " + nombresPorEdad);
+    	
+    	/* Ejercicio: Obtener una coleccion que agrupe y calcule el salario Promedio por fecha de Alta
+    	 * solo para el genero MUJER*/
+    	
+    	Map<LocalDate, Map<Genero, Double>> salarioPromedio = listadoGenerico.stream()
+    			.filter(o -> o instanceof Empleado emp && emp.getGenero().equals(Genero.MUJER))
+    			.map(o -> (Empleado)o)// se importó java.util.Collectors
+    			.collect(groupingBy(Empleado::getFechaAlta,
+    				groupingBy(Empleado::getGenero,
+    						averagingDouble(emp -> emp.getSalario().doubleValue()))));
+    	// covertimos el salario obtenido a double para poder usar averagingDouble
+    	System.out.println("Empleados por Genero: " + salarioPromedio);
+    						 
     	
     	
     	
