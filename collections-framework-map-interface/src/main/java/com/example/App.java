@@ -326,10 +326,11 @@ public class App {
 	    	
 	    	Dpto k = entry1.getKey();
 	    	Map<Genero, List<Empleado>> v = entry1.getValue();
-	    	
+	    	System.out.println();
 	    	for (Map.Entry<Genero, List<Empleado>> entry2 : v.entrySet()) {
+	    		
 	    		System.out.println("Del Dpto: " + k + ", y del Genero: " + entry2.getKey());
-	    		System.out.println("Los empledos se muestran a continuación: ");
+	    		System.out.println("Los empledos se muestran a continuación: \n");
 	    		
 	    		
 	    	}
