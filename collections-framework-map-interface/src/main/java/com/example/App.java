@@ -356,16 +356,23 @@ public class App {
 	    
 	    empleadosPorDptoYGenero.entrySet().forEach(entry1 -> {
 	    	
-	    	System.out.println("Del Dpto: " + entry1.getKey());
+	    	Dpto dpto = entry1.getKey();
 	    	
+	    	System.out.println("\nDel Dpto: " + entry1.getKey());
 	    	
-	    	entry1.getValue().entrySet().forEach(entry2 -> {
+	    	Map<Genero, List<Empleado>> mapaAnidado = entry1.getValue();
+	    	
+	    	mapaAnidado.entrySet().forEach(entry2 -> {
+	    		
+	    		Genero genero = entry2.getKey();
 	    		
 	    		System.out.println("Del Género: "+ entry2.getKey());
 	    		
-	    		System.out.println("La Lista de empleados ordenada según el Orden Natural por Antiguedad: ");
+	    		System.out.println("\nLa Lista de empleados ordenada según el Orden Natural por Antiguedad: ");
 	    		
-	    		entry2.getValue().stream().sorted().forEach(System.out::println);
+	    		List<Empleado> empleados = entry2.getValue();
+	    		
+	    		empleados.stream().sorted().forEach(System.out::println);
 	    	});
 	    	
 	    	
