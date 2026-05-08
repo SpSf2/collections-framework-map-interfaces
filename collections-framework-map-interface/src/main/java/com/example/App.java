@@ -7,11 +7,13 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -378,9 +380,36 @@ public class App {
 	    	
 	    	
 	    });
+    	/** ORDENAMIENTO DE LAS CLAVES DE UN MAPA
+    	 * Los algoritmos de busqueda y ordenamiento que se aplican a las colecciones que heredan  de la interfaz
+    	 * Collection "NO" se pueden aplicar a la interfaz Map
+    	 * Lo que se rcomienda es trabajar los mapas como un objeto creado a partir de la clase y posteriormente
+    	 * copiar dicho mapa en un TreeMap, que permite ordenar las claves.
+    	 * 
+    	 *  De hecho cuando se crea un mapa a partir de recorrer una lista, por defecto se utiliza "HashMap"
+    	 *  
+    	 *  ejem: vamos a ordenar las claves del mapa m*/
     	
-    	
-    	
+	     System.out.println("----------     ORDENAMIENTO DE LAS CLAVES DE UN MAPA     -----------");
+	     System.out.println("\nMapa m, sin ordenar las claves: ");
+	     System.out.println(m);
+	     
+	     //Como ordenar las claves del mapa m, lexicograficamente de la A a la Z:
+	     Map<String, Long> mOrdenadolexicograficamente = new TreeMap<>();
+	     
+	     mOrdenadolexicograficamente.putAll(m);
+	     System.out.println("\nOrdenando las claves: ");
+	     System.out.println(mOrdenadolexicograficamente);
+	     
+	     // ordenar el mapa en orden lexicograficamente inverso:
+	     
+	     Map<String, Long> mOrdenadolexicograficamenteInverso = new TreeMap<String, Long>(Comparator.reverseOrder());
+	     
+	     mOrdenadolexicograficamenteInverso.putAll(m);
+	     System.out.println("\nclaves en orden Inversa: ");
+	     System.out.println(mOrdenadolexicograficamenteInverso);
+	     
+    	// Recordar que la lista m se llena en el Run As configuration
     }
 }
 
