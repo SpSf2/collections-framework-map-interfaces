@@ -6,7 +6,9 @@ import java.time.Month;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -322,28 +324,53 @@ public class App {
 	    // Recorrer el Mapa empleadosPorDptoYGenero y mostrar el orden natural por antiguedad, los más
 	    //antiguos primero: 1º con for mejorado y después operaciones de agregado
 	    
-	    for (Map.Entry<Dpto, Map<Genero, List<Empleado>>> entry1 : empleadosPorDptoYGenero.entrySet()) {
+/*	    for (Map.Entry<Dpto, Map<Genero, List<Empleado>>> entry1: empleadosPorDptoYGenero.entrySet()) {
+			
+			// la clave de la entrada del mapa entry1:
+	    	Dpto clave1 = entry1.getKey();
 	    	
-	    	Dpto k = entry1.getKey();
-	    	Map<Genero, List<Empleado>> v = entry1.getValue();
-	    	System.out.println();
-	    	for (Map.Entry<Genero, List<Empleado>> entry2 : v.entrySet()) {
-	    		
-	    		System.out.println("Del Dpto: " + k + ", y del Genero: " + entry2.getKey());
-	    		System.out.println("Los empledos se muestran a continuación: \n");
-	    		
-	    		
-	    	}
+	    	// La segunda clave, de la entrada entry1 que es el Genero puede ser más de una para cada Dpto
+	    	// Como obtenemos dica clave?  Rpta: a partir del value de la entrada entry1
+	    	Map<Genero, List<Empleado>> valor1 = entry1.getValue();
 	    	
-	    }
+	    		for (Map.Entry<Genero, List<Empleado>> entry2 : valor1.entrySet()) {
+	    			
+	    			Genero clave2 = entry2.getKey();
+	    			List<Empleado> empleados = entry2.getValue();
+	    			
+	    			System.out.println("\nDel Departamento: " + clave1 + ", y del Género: " + clave2);
+	    			System.out.println("Los Empleados ordenados por Antiguedad son: \n");
+	    			
+	    			// ordenamos la lista de empleados según el orden natural de la clase Empleado
+	    			Collections.sort(empleados);
+	    			
+	    			for (Empleado empleado : empleados) {
+	    				
+	    				System.out.println(empleado);
+	    			}
+	    		}
+	    }    */
+    
+    	// ahora con Operaciones de Agregado:
+	    System.out.println("------  Con Operaciones de Agregado  ------");
 	    
-    
-      
-    
-    
-    
-    
-    	
+	    empleadosPorDptoYGenero.entrySet().forEach(entry1 -> {
+	    	
+	    	System.out.println("Del Dpto: " + entry1.getKey());
+	    	
+	    	
+	    	entry1.getValue().entrySet().forEach(entry2 -> {
+	    		
+	    		System.out.println("Del Género: "+ entry2.getKey());
+	    		
+	    		System.out.println("La Lista de empleados ordenada según el Orden Natural por Antiguedad: ");
+	    		
+	    		entry2.getValue().stream().sorted().forEach(System.out::println);
+	    	});
+	    	
+	    	
+	    	
+	    });
     	
     	
     	
